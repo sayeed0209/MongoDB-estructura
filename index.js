@@ -1,3 +1,4 @@
+use("Cul d'Ampolla");
 db.createCollection("provedores", {
 	validator: {
 		$jsonSchema: {
@@ -146,13 +147,118 @@ db.createCollection("empleadores", {
 					description: "must be a integer and is required",
 				},
 				correo_electronico: {
-					bsonType: "string",
-					description: "must be a string and is required",
+					pattern: "@gmail.com$",
+					description:
+						"must be a string and match the regular expression pattern",
 				},
 				// `para la referencia del cliente que el empleado vendio las gafas
 				client_id: {
 					bsonType: "objectId",
 					description: "must be an objectid and is required",
+				},
+			},
+		},
+	},
+});
+
+//  Pizzeria
+db.createCollection("provincias", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre"],
+			properties: {
+				_id: {},
+				nombre_de_provincias: {
+					bsonType: "string",
+					description: "nombre_de_provincias must be a string",
+				},
+			},
+		},
+	},
+});
+
+db.createCollection("localidad", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre"],
+			properties: {
+				_id: {},
+				nombre_de_localidad: {
+					bsonType: "string",
+					description: "nombre_de_provincias must be a string",
+				},
+			},
+		},
+	},
+});
+db.createCollection("clientes", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre"],
+			properties: {
+				_id: {},
+				nombre: {
+					bsonType: "string",
+					description: "Name is required string",
+				},
+				apellidos: {
+					bsonType: "string",
+					description: "apllidos is a string",
+				},
+				direccion: {
+					bsonType: "string",
+					description: "apllidos is a string",
+				},
+				codigo_postal: {
+					bsonType: "string",
+					description: "codigo postal is a string",
+				},
+				localidad: {
+					bsonType: "objectId",
+					description: "must be an objectid",
+				},
+				provincia: {
+					bsonType: "objectId",
+					description: "must be an objectid",
+				},
+				telefono: {
+					bsonType: "string",
+					description: "telephone number is a string",
+				},
+			},
+		},
+	},
+});
+
+db.createCollection("pedidos", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre", "tipos_de_reparto"],
+			properties: {
+				_id: {},
+				nombre: {
+					bsonType: "string",
+					description: "name is a required string",
+				},
+				fetcha: {
+					bsonType: "date",
+					description: "fetcha must be a date",
+				},
+				tipos_de_reparto: {
+					enum: ["online", "tienda"],
+					description: "can only be one of the enum values and is required",
+				},
+				cantidad: {
+					bsonType: "int",
+					description: "must be a integer",
+				},
+				precio: {
+					bsonType: "int",
+					description: "must be a integer",
 				},
 			},
 		},

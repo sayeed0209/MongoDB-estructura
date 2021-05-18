@@ -151,8 +151,32 @@ db.createCollection("empleadores", {
 					description:
 						"must be a string and match the regular expression pattern",
 				},
+			},
+		},
+	},
+});
+
+db.createCollection("invoice", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["cliente_id", "empleado_id", "gafas_id"],
+			properties: {
 				// `para la referencia del cliente que el empleado vendio las gafas
-				client_id: {
+				cliente_id: {
+					bsonType: "objectId",
+					description: "must be an objectid and is required",
+				},
+				// `para la referencia del cliente que el empleado vendio las gafas
+				empleado_id: {
+					bsonType: "objectId",
+					description: "must be an objectid and is required",
+				},
+				fetcha_de_registro: {
+					bsonType: "date",
+					description: "must be a date",
+				},
+				gafas_id: {
 					bsonType: "objectId",
 					description: "must be an objectid and is required",
 				},

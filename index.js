@@ -61,7 +61,14 @@ db.createCollection("gafas", {
 	validator: {
 		$jsonSchema: {
 			bsonType: "object",
-			required: ["marca", "graduacion", "tipo_de_montura", "fax", "NIF"],
+			required: [
+				"marca",
+				"graduacion",
+				"tipo_de_montura",
+				"fax",
+				"NIF",
+				"precio",
+			],
 			properties: {
 				marca: {
 					bsonType: "string",
@@ -89,7 +96,7 @@ db.createCollection("gafas", {
 					description: "must be a string and is required",
 				},
 				precio: {
-					bsonType: "number",
+					bsonType: "int",
 					description: "must be a string and is required",
 				},
 				provedor_id: {
@@ -156,7 +163,7 @@ db.createCollection("empleadores", {
 	},
 });
 
-db.createCollection("invoice", {
+db.createCollection("facturas", {
 	validator: {
 		$jsonSchema: {
 			bsonType: "object",
@@ -281,8 +288,142 @@ db.createCollection("pedidos", {
 					description: "must be a integer",
 				},
 				precio: {
-					bsonType: "int",
+					bsonType: "decimal",
 					description: "must be a integer",
+				},
+			},
+		},
+	},
+});
+
+db.createCollection("productos", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre", "description", "imagin", "precio"],
+			properties: {
+				_id: {},
+				nombre: {
+					bsonType: "string",
+					description: "name is a required string",
+				},
+				descripcion: {
+					bsonType: "string",
+					description: "descripcion para productos is a required string",
+				},
+				imagin: {
+					bsonType: "string",
+					description: "imagin is a required string",
+				},
+				precio: {
+					bsonType: "int",
+					description: "precio is a required int",
+				},
+				categoria_id: {
+					bsonType: "objectId",
+					description: "categoria id is a required object",
+				},
+			},
+		},
+	},
+});
+db.createCollection("categorias", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre"],
+			properties: {
+				_id: {},
+				nombre: {
+					bsonType: "string",
+					description: "name is a required string",
+				},
+			},
+		},
+	},
+});
+db.createCollection("tiendas", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: [
+				"nombre",
+				"direccion",
+				"codigo_postal",
+				"localidad",
+				"provincia",
+			],
+			properties: {
+				_id: {},
+				nombre: {
+					bsonType: "string",
+					description: "name is a required string",
+				},
+				direccion: {
+					bsonType: "string",
+					description: "direcion is a required string",
+				},
+				codigo_postal: {
+					bsonType: "string",
+					description: "codigo posatl is a required string",
+				},
+				localidad: {
+					bsonType: "string",
+					description: "localidad is a required string",
+				},
+				provincia: {
+					bsonType: "string",
+					description: "provincia is a required string",
+				},
+				empleado_id: {
+					bsonType: "objectId",
+					description: "must be an objectid",
+				},
+			},
+		},
+	},
+});
+db.createCollection("empleadores", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["nombre", "apellidos", "NIF", "telefono", "tipo_de_trabajo"],
+			properties: {
+				_id: {},
+				nombre: {
+					bsonType: "string",
+					description: "name is a required string",
+				},
+				apellidos: {
+					bsonType: "string",
+					description: "direcion is a required string",
+				},
+				NIF: {
+					bsonType: "string",
+					description: "codigo posatl is a required string",
+				},
+				telefono: {
+					bsonType: "string",
+					description: "localidad is a required string",
+				},
+				tipo_de_trbajo: {
+					enum: ["cocinero", "repartidor"],
+					description: "can only be one of the enum values and is required",
+				},
+				repartidor_de_domicilio: {
+					bsonType: "object",
+					required: ["repartidor_id"],
+					properties: {
+						repartidor_id: {
+							// repartidor_id es el empleado que es repatidor
+							bsonType: "objectId",
+							description: "must be an objectid",
+						},
+						fetcha_de_entrega: {
+							bsonType: "date",
+							description: "must be a date",
+						},
+					},
 				},
 			},
 		},

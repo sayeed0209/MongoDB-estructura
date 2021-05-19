@@ -96,7 +96,7 @@ db.createCollection("gafas", {
 					description: "must be a string and is required",
 				},
 				precio: {
-					bsonType: "int",
+					bsonType: "decimal",
 					description: "must be a string and is required",
 				},
 				provedor_id: {
@@ -289,7 +289,7 @@ db.createCollection("pedidos", {
 				},
 				precio: {
 					bsonType: "decimal",
-					description: "must be a integer",
+					description: "must be a decimal",
 				},
 			},
 		},
@@ -316,8 +316,8 @@ db.createCollection("productos", {
 					description: "imagin is a required string",
 				},
 				precio: {
-					bsonType: "int",
-					description: "precio is a required int",
+					bsonType: "decimal",
+					description: "precio is a required decimal",
 				},
 				categoria_id: {
 					bsonType: "objectId",

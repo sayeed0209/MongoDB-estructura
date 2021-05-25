@@ -72,3 +72,8 @@ db.restaurante.find(
 	{ name: /.*Reg.*/ },
 	{ restaurant_id: 1, name: 1, borough: 1, cuisine: 1 }
 );
+// 17
+db.restaurante.find({
+	borough: "Bronx",
+	$or: [{ cuisine: "American " }, { cuisine: "Chinese" }],
+});

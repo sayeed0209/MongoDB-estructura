@@ -143,3 +143,22 @@ db.restaurante.find().sort({ name: 1 });
 db.restaurante.find().sort({ name: -1 }).pretty();
 // 27
 db.restaurante.find().sort({ cuisine: 1 }, { borough: -1 }).pretty();
+// 28
+db.restaurante.find({ "address.street": { $exists: true } });
+// 29
+db.restaurante.find({ "address.coord": { $type: 1 } }).pretty();
+// 30
+db.restaurante.find(
+	{ "grades.score": { $mod: [7, 0] } },
+	{ restaurant_id: 1, name: 1, grades: 1 }
+);
+// 31
+db.restaurante.find(
+	{ name: { $regex: "mon.*", $options: "i" } },
+	{ name: 1, borough: 1, "address.coord": 1, cuisine: 1 }
+);
+// 32
+db.restaurante.find(
+	{ name: { $regex: /^Mad/i } },
+	{ name: 1, borough: 1, "address.coord": 1, cuisine: 1 }
+);

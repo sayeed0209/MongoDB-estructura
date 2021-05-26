@@ -99,3 +99,47 @@ db.restaurante
 			{ restaurant_id: 1, name: 1, borough: 1, cuisine: 1 }
 		)
 		.pretty();
+// 21
+db.restaurante.find(
+	{
+		$or: [
+			{ name: /^Wil/ },
+			{
+				$and: [
+					{ cuisine: { $ne: "American " } },
+					{ cuisine: { $ne: "Chinese" } },
+				],
+			},
+		],
+	},
+	{ restaurant_id: 1, name: 1, borough: 1, cuisine: 1 }
+);
+// 22
+db.restaurante.find(
+	{
+		"grades.date": ISODate("2014-08-11T00:00:00Z"),
+		"grades.grade": "A",
+		"grades.score": 11,
+	},
+	{ restaurant_id: 1, name: 1, grades: 1 }
+);
+// 23
+db.restaurante.find(
+	{
+		"grades.1.date": ISODate("2014-08-11T00:00:00Z"),
+		"grades.1.grade": "A",
+		"grades.1.score": 11,
+	},
+	{ restaurant_id: 1, name: 1, grades: 1 }
+);
+// 24
+db.restaurante.find(
+	{ "address.coord.1": { $gt: 42, $lte: 52 } },
+	{ restaurant_id: 1, name: 1, address: 1, coord: 1 }
+);
+// 25
+db.restaurante.find().sort({ name: 1 });
+// 26
+db.restaurante.find().sort({ name: -1 }).pretty();
+// 27
+db.restaurante.find().sort({ cuisine: 1 }, { borough: -1 }).pretty();

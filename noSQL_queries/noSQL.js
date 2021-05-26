@@ -77,3 +77,25 @@ db.restaurante.find({
 	borough: "Bronx",
 	$or: [{ cuisine: "American " }, { cuisine: "Chinese" }],
 });
+// 18
+db.restaurante
+	.find(
+		{ borough: { $in: ["Staten Island", "Queens", "Bronx", "Brooklyn"] } },
+		{ restaurant_id: 1, name: 1, borough: 1, cuisine: 1 }
+	)
+	.pretty();
+// 19
+db.restaurante
+	.find(
+		{ borough: { $nin: ["Staten Island", "Queens", "Bronx", "Brooklyn"] } },
+		{ restaurant_id: 1, name: 1, borough: 1, cuisine: 1 }
+	)
+	.pretty() >
+	// 20
+
+	db.restaurante
+		.find(
+			{ "grades:score": { $not: { $gt: 10 } } },
+			{ restaurant_id: 1, name: 1, borough: 1, cuisine: 1 }
+		)
+		.pretty();

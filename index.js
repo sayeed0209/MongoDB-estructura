@@ -17,6 +17,10 @@ db.createCollection("provedores", {
 					bsonType: "string",
 					description: "must be a string and is required",
 				},
+				telefono: {
+					bsonType: "string",
+					description: "must be a string and is required",
+				},
 
 				address: {
 					bsonType: "object",

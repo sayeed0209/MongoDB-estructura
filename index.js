@@ -17,6 +17,10 @@ db.createCollection("provedores", {
 					bsonType: "string",
 					description: "must be a string and is required",
 				},
+				telefono: {
+					bsonType: "string",
+					description: "must be a string and is required",
+				},
 
 				address: {
 					bsonType: "object",
@@ -89,10 +93,6 @@ db.createCollection("gafas", {
 				},
 				color_de_cristal: {
 					bsonType: "array",
-					description: "must be a string and is required",
-				},
-				color_de_montura: {
-					bsonType: "string",
 					description: "must be a string and is required",
 				},
 				precio: {

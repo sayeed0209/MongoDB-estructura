@@ -91,10 +91,6 @@ db.createCollection("gafas", {
 					bsonType: "array",
 					description: "must be a string and is required",
 				},
-				color_de_montura: {
-					bsonType: "string",
-					description: "must be a string and is required",
-				},
 				precio: {
 					bsonType: "decimal",
 					description: "must be a string and is required",
@@ -135,57 +131,23 @@ db.createCollection("clientes", {
 					bsonType: "objectId",
 					description: "must be an objectid and is required",
 				},
-			},
-		},
-	},
-});
-db.createCollection("empleadores", {
-	validator: {
-		$jsonSchema: {
-			bsonType: "object",
-			required: ["nombre", "edad", "correo_electronico"],
-			properties: {
-				nombre: {
-					bsonType: "string",
-					description: "must be a string and is required",
-				},
-				edad: {
-					bsonType: "int",
-					description: "must be a integer and is required",
-				},
-				correo_electronico: {
-					pattern: "@gmail.com$",
-					description:
-						"must be a string and match the regular expression pattern",
-				},
-			},
-		},
-	},
-});
-
-db.createCollection("facturas", {
-	validator: {
-		$jsonSchema: {
-			bsonType: "object",
-			required: ["cliente_id", "empleado_id", "gafas_id"],
-			properties: {
-				// `para la referencia del cliente que el empleado vendio las gafas
-				cliente_id: {
-					bsonType: "objectId",
-					description: "must be an objectid and is required",
-				},
-				// `para la referencia del cliente que el empleado vendio las gafas
-				empleado_id: {
-					bsonType: "objectId",
-					description: "must be an objectid and is required",
-				},
-				fetcha_de_registro: {
-					bsonType: "date",
-					description: "must be a date",
-				},
-				gafas_id: {
-					bsonType: "objectId",
-					description: "must be an objectid and is required",
+				empleadores: {
+					bsonType: "object",
+					properties: {
+						nombre: {
+							bsonType: "string",
+							description: "must be a string if the field exists",
+						},
+						edad: {
+							bsonType: "int",
+							description: "must be a integer and is required",
+						},
+						correo_electronico: {
+							pattern: "@gmail.com$",
+							description:
+								"must be a string and match the regular expression pattern",
+						},
+					},
 				},
 			},
 		},
@@ -193,37 +155,7 @@ db.createCollection("facturas", {
 });
 
 //  Pizzeria
-db.createCollection("provincias", {
-	validator: {
-		$jsonSchema: {
-			bsonType: "object",
-			required: ["nombre"],
-			properties: {
-				_id: {},
-				nombre_de_provincias: {
-					bsonType: "string",
-					description: "nombre_de_provincias must be a string",
-				},
-			},
-		},
-	},
-});
 
-db.createCollection("localidad", {
-	validator: {
-		$jsonSchema: {
-			bsonType: "object",
-			required: ["nombre"],
-			properties: {
-				_id: {},
-				nombre_de_localidad: {
-					bsonType: "string",
-					description: "nombre_de_provincias must be a string",
-				},
-			},
-		},
-	},
-});
 db.createCollection("clientes", {
 	validator: {
 		$jsonSchema: {
@@ -248,12 +180,24 @@ db.createCollection("clientes", {
 					description: "codigo postal is a string",
 				},
 				localidad: {
-					bsonType: "objectId",
-					description: "must be an objectid",
+					bsonType: "object",
+					properties: {
+						_id: {},
+						nombre_de_localidad: {
+							bsonType: "string",
+							description: "nombre_de_provincias must be a string",
+						},
+					},
 				},
 				provincia: {
 					bsonType: "objectId",
-					description: "must be an objectid",
+					properties: {
+						_id: {},
+						nombre_de_provincias: {
+							bsonType: "string",
+							description: "nombre_de_provincias must be a string",
+						},
+					},
 				},
 				telefono: {
 					bsonType: "string",
@@ -300,7 +244,7 @@ db.createCollection("productos", {
 	validator: {
 		$jsonSchema: {
 			bsonType: "object",
-			required: ["nombre", "description", "imagin", "precio"],
+			required: ["nombre", "description", "imagen", "precio"],
 			properties: {
 				_id: {},
 				nombre: {
@@ -311,37 +255,29 @@ db.createCollection("productos", {
 					bsonType: "string",
 					description: "descripcion para productos is a required string",
 				},
-				imagin: {
+				imagen: {
 					bsonType: "string",
-					description: "imagin is a required string",
+					description: "imagen is a required string",
 				},
 				precio: {
 					bsonType: "decimal",
 					description: "precio is a required decimal",
 				},
-				categoria_id: {
+				categoria: {
 					bsonType: "objectId",
-					description: "categoria id is a required object",
+					properties: {
+						_id: {},
+						nombre: {
+							bsonType: "string",
+							description: "name is a required string",
+						},
+					},
 				},
 			},
 		},
 	},
 });
-db.createCollection("categorias", {
-	validator: {
-		$jsonSchema: {
-			bsonType: "object",
-			required: ["nombre"],
-			properties: {
-				_id: {},
-				nombre: {
-					bsonType: "string",
-					description: "name is a required string",
-				},
-			},
-		},
-	},
-});
+
 db.createCollection("tiendas", {
 	validator: {
 		$jsonSchema: {
